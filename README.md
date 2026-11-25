@@ -1,5 +1,9 @@
 # Motorledger
 
+The primary deliverable is an Android app sharing this static UI. Native sources are in `android/`; full Fuelio backup migration is still in progress. See [current gaps](docs/development/compliance.md).
+
+Development requires Node.js 24+: run `npm ci --ignore-scripts` and `npm run check`. Read [contributing](CONTRIBUTING.md), [security](SECURITY.md), and [architecture](docs/architecture/overview.md). No new APK release is verified by these JavaScript checks.
+
 Motorledger is a browser-based vehicle logbook. The sample Mazda has illustrative fill-ups, expenses, and maintenance reminders. Add a vehicle in Garage to start a separate ledger with your own currency, distance units, and fuel volume units.
 
 ## Run locally

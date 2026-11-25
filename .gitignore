@@ -1,0 +1,15 @@
+node_modules/
+android/release/
+coverage/
+test-results/
+playwright-report/
+.env
+.env.*
+!.env.example
+*.p12
+*.keystore
+*.jks
+*.dpapi
+*.fuelio.zip
+/private-fixtures/
+
