@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#142320" />
+    <title>Motorledger · Vehicle dashboard</title>
+    <link rel="icon" href="mark.svg" />
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="icons.js"></script>
+    <script defer src="model.js"></script>
+    <script defer src="app.js"></script>
+    <script defer src="trips.js"></script>
+    <script defer src="actions.js"></script>
+    <script defer src="migrate.js"></script>
+  </head>
+  <body>
+    <aside id="sidebar">
+      <a href="#Overview" class="brand"
+        ><img src="mark.svg" alt="" />Motorledger</a
+      >
+      <div class="navlabel">WORKSPACE</div>
+      <nav id="navigation"></nav>
+      <div class="sidefoot">
+        <span class="avatar"><i data-lucide="hard-drive"></i></span>
+        <div><b>Local workspace</b><small>On this device</small></div>
+      </div>
+    </aside>
+    <main>
+      <header>
+        <div class="crumb">
+          <button class="mobile" id="menu" aria-label="Toggle navigation">
+            <i data-lucide="menu"></i></button
+          ><i data-lucide="panels-top-left"></i><span>Workspace</span><em>/</em
+          ><strong id="crumb"></strong>
+        </div>
+        <button id="switch">
+          <i data-lucide="car-front"></i><span id="current"></span
+          ><i data-lucide="chevrons-up-down"></i>
+        </button>
+      </header>
+      <div id="content"></div>
+    </main>
+    <dialog id="modal">
+      <form id="form">
+        <div class="dialoghead">
+          <h2 id="dialogTitle"></h2>
+          <button type="button" class="iconbtn" id="close" aria-label="Close">
+            <i data-lucide="x"></i>
+          </button>
+        </div>
+        <div id="fields"></div>
+        <p id="error" role="alert"></p>
+        <div id="actions"></div>
+      </form>
+    </dialog>
+    <div id="toast" role="status"></div>
+  </body>
+</html>
