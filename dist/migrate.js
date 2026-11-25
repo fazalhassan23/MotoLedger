@@ -26,7 +26,7 @@ function csvRows(text) {
   return rows;
 }
 function readFuelio(raw) {
-  const groups = {};
+  const groups = Object.create(null);
   let group = null,
     header = null;
   for (const row of csvRows(raw.replace(/^\uFEFF/, ""))) {
@@ -74,7 +74,7 @@ function readFuelio(raw) {
       Number.isFinite(Date.parse(s)) &&
       new Date(s).toISOString().startsWith(s);
   for (const [i, r] of log.rows.entries()) {
-    let date = r.data || r.date,
+    let date = (r.data || r.date || "").slice(0, 10),
       qty = Number(r[fh]),
       odo = +r[oh],
       price = +r.volumeprice || +r[ph] / qty,
@@ -115,6 +115,7 @@ function readFuelio(raw) {
             ? "Partial"
             : "Full",
       row: i + 1,
+      source: r,
     });
   }
   let last = null;
@@ -129,7 +130,7 @@ function readFuelio(raw) {
   }
   for (const [i, r] of (groups.Costs?.rows || []).entries()) {
     if (
-      !validDate(r.date) ||
+      !validDate((r.date || "").slice(0, 10)) ||
       !r.cost ||
       !Number.isFinite(+r.cost) ||
       +r.cost < 0 ||
@@ -144,9 +145,10 @@ function readFuelio(raw) {
     logs.push({
       id: Model.id(),
       type: "Expense",
-      date: r.date,
+      date: r.date.slice(0, 10),
       name: (r.costtitle || "Imported expense").slice(0, 180),
       cost: +r.cost,
+      source: r,
     });
   }
   if (!logs.length)
@@ -162,6 +164,7 @@ function readFuelio(raw) {
       system: us ? "us" : "metric",
       logs,
       services: [],
+      fuelio: groups,
     },
   };
 }

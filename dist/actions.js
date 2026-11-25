@@ -229,15 +229,25 @@ function act(a) {
       return $("#file").click();
   }
 }
-$("#form").onsubmit = (e) => {
+let isSavingForm = false;
+$("#modal").addEventListener("cancel", (event) => {
+  if (isSavingForm) event.preventDefault();
+});
+$("#form").onsubmit = async (e) => {
   e.preventDefault();
-  if (!dialogAction) return;
+  if (!dialogAction || isSavingForm) return;
+  isSavingForm = true;
+  const controls = [...e.target.querySelectorAll("button")];
+  controls.forEach((button) => { button.disabled = true; });
   try {
-    dialogAction(Object.fromEntries(new FormData(e.target)));
+    await dialogAction(Object.fromEntries(new FormData(e.target)));
     $("#modal").close();
     toast("Changes saved");
   } catch (err) {
     $("#error").textContent = err.message;
+  } finally {
+    isSavingForm = false;
+    controls.forEach((button) => { button.disabled = false; });
   }
 };
 $("#close").onclick = () => $("#modal").close();
